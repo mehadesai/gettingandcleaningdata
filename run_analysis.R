@@ -5,7 +5,7 @@ library('plyr')
 library('reshape2')
 
 ## PART 1
-base_dir <- '/home/urbandev/UCI\ HAR\ Dataset/'
+base_dir <- paste(getwd(), '/UCI\ HAR\ Dataset/', sep = '', collapse = NULL)
 
 # read data from test set.
 test_set_file_path <- paste(base_dir, 'test/X_test.txt', sep = '', collapse = NULL)
