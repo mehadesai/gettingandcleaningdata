@@ -1,4 +1,4 @@
-install.packages(c('data.table', 'reshape2', 'plyr'))
+# install.packages(c('data.table', 'reshape2', 'plyr'))
 
 library('data.table')
 library('plyr')
@@ -18,14 +18,14 @@ test_subjects <- read.table(test_subjects_file_path, col.names="subject")
 # read data from training set.
 training_set_file_path <- paste(base_dir, 'train/X_train.txt', sep = '', collapse = NULL)
 training_set <- read.table(training_set_file_path)
-training_labels_file_path <- paste(base_dir, 'train/y_test.txt', sep = '', collapse = NULL)
+training_labels_file_path <- paste(base_dir, 'train/y_train.txt', sep = '', collapse = NULL)
 training_labels <- read.table(training_labels_file_path, col.names="label")
-training_subjects_file_path <- paste(base_dir, 'train/subject_test.txt', sep = '', collapse = NULL)
+training_subjects_file_path <- paste(base_dir, 'train/subject_train.txt', sep = '', collapse = NULL)
 training_subjects <- read.table(training_subjects_file_path, col.names="subject")
 
 # merge data from test set and training set.
-merged_test_training_data <- rbind(cbind(test_subjects, test_labels, test_data),
-                                   cbind(training_subjects, training_labels, training_data))
+merged_test_training_data <- rbind(cbind(test_subjects, test_labels, test_set),
+                                   cbind(training_subjects, training_labels, training_set))
 
 ## PART 2
 # mean and standrad deviation are estimated from the signals provided in the features.
@@ -51,3 +51,12 @@ std_dev_data$label <- all_activity_labels[std_dev_data$label, 2]
 
 ## PART 4
 # labeling the data with descriptive variable names
+# already labeled in part 3 above
+
+## PART 5
+# get mean of each variable for each activity and each subject.
+final_data <- data.frame()
+final_data <- rbind(final_data, mean_data)
+
+## WRITE TABLE
+write.table(format(final_data, scientific = TRUE), "tidy_final.txt", row.name = FALSE)
